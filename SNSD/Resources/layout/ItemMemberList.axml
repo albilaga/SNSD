@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/ProfileImage"
+        android:layout_height="120dp"
+        android:layout_width="120dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/empty_profile"
+        android:scaleType="fitStart" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="6dp">
+        <TextView
+            android:id="@+id/MemberName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="Name" />
+        <TextView
+            android:id="@+id/MemberDesc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="6dp"
+            android:textSize="14sp"
+            android:text="Description" />
+    </LinearLayout>
+</LinearLayout>
