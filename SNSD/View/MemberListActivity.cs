@@ -7,8 +7,9 @@
     using Android.OS;
     using Android.Support.V7.Widget;
 
+    using SNSD.Data_Service;
     using SNSD.Model;
-    
+
     [Activity(MainLauncher = true)]
     public class MemberListActivity : Activity
     {
@@ -95,7 +96,7 @@
                     });
         }
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
@@ -104,11 +105,13 @@
 
             this._Members = new List<Member>();
             //Create Dummy
-            this.InitDummy();
+            //this.InitDummy();
+            var service = new DataService();
+            this._Members = await service.SendListMembersRequest();
 
             //Assign recycler view in layout
             this._ListMembers = this.FindViewById<RecyclerView>(Resource.Id.ListMembers);
-            //Set layout for recycler view to vertically 
+            //Set layout for recycler view to stack vertically
             this._ListMembers.SetLayoutManager(new LinearLayoutManager(this));
 
             this._Adapter = new MemberListAdapter(this._Members, this);
@@ -127,8 +130,6 @@
             var member = this._Members[e];
             //Passing item to intent
             intent.PutExtra("MemberName", member.Name);
-            intent.PutExtra("MemberFullDescription", member.FullDescription);
-            intent.PutExtra("MemberProfile", member.ImageProfileUrl);
             //Start Activity to change to other activity
             this.StartActivity(intent);
         }

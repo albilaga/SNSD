@@ -6,37 +6,41 @@ namespace SNSD.View
     using Android.OS;
     using Android.Widget;
 
+    using SNSD.Data_Service;
     using SNSD.Helper;
 
-    [Activity   ]
+    [Activity]
     public class MemberDetailActivity : Activity
     {
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             //Set view from Resource -> Layout
             this.SetContentView(Resource.Layout.DetailMember);
-            
+
             //Parse data from activity before
             var memberName = this.Intent.GetStringExtra("MemberName");
-            var memberFullDescription = this.Intent.GetStringExtra("MemberFullDescription");
-            var memberProfile = this.Intent.GetStringExtra("MemberProfile");
-            this.FindViewById<TextView>(Resource.Id.MemberName).Text = memberName;
-            this.FindViewById<TextView>(Resource.Id.MemberFullDescription).Text = memberFullDescription;
-
-            
-            if (!string.IsNullOrWhiteSpace(memberProfile))
+            var service = new DataService();
+            var result = await service.SendDetailMemberRequest(memberName);
+            //validation
+            if (result != null)
             {
-                //Run download image in background thread
-                Task.Factory.StartNew(
-                    () =>
-                        {
-                            var bmp = ImageHelper.GetImageBitmapFromUrl(memberProfile);
-                            //Change image in UI thread
-                            this.RunOnUiThread(
-                                () => this.FindViewById<ImageView>(Resource.Id.ProfileImage).SetImageBitmap(bmp));
-                        });
+                this.FindViewById<TextView>(Resource.Id.MemberName).Text = result.Name;
+                this.FindViewById<TextView>(Resource.Id.MemberFullDescription).Text = result.FullDescription;
+
+                if (!string.IsNullOrWhiteSpace(result.ImageProfileUrl))
+                {
+                    //Run download image in background thread
+                    Task.Factory.StartNew(
+                        () =>
+                            {
+                                var bmp = ImageHelper.GetImageBitmapFromUrl(result.ImageProfileUrl);
+                                //Change image in UI thread
+                                this.RunOnUiThread(
+                                    () => this.FindViewById<ImageView>(Resource.Id.ProfileImage).SetImageBitmap(bmp));
+                            });
+                }
             }
         }
     }
