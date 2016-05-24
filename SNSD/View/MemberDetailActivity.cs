@@ -37,7 +37,7 @@ namespace SNSD.View
                             {
                                 var bmp = ImageHelper.GetImageBitmapFromUrl(result.ImageProfileUrl);
                                 //Change image in UI thread
-                                this.RunOnUiThread(
+                                this.RunOnUiThread( 
                                     () => this.FindViewById<ImageView>(Resource.Id.ProfileImage).SetImageBitmap(bmp));
                             });
                 }

@@ -132,6 +132,7 @@
             intent.PutExtra("MemberName", member.Name);
             //Start Activity to change to other activity
             this.StartActivity(intent);
+            //Resource.Id.bu
         }
     }
 }

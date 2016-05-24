@@ -109,11 +109,11 @@ namespace SNSD
 			// aapt resource value: 0x7f050002
 			public const int MemberName = 2131034114;
 			
-			// aapt resource value: 0x7f050005
-			public const int MyButton = 2131034117;
-			
 			// aapt resource value: 0x7f050001
 			public const int ProfileImage = 2131034113;
+			
+			// aapt resource value: 0x7f050005
+			public const int RecyclerView = 2131034117;
 			
 			// aapt resource value: 0x7f050000
 			public const int item_touch_helper_previous_elevation = 2131034112;
